@@ -1,0 +1,67 @@
+```plantuml
+@startuml
+left to right direction
+
+actor "Coordenador" as Coordenador
+actor "Aluno" as Aluno
+actor "Professor" as Professor
+actor "Monitor" as Monitor
+actor "Departamento" as Departamento
+
+package "Portal de Vagas" {
+    usecase "Publicar Vaga de Monitoria" as PV
+    usecase "Editar Vaga" as EV
+    usecase "Remover Vaga" as RV
+    usecase "Visualizar Vagas" as VV
+}
+
+package "Cadastro de Candidatos" {
+    usecase "Criar Perfil de Candidato" as CPC
+    usecase "Anexar Documentos" as AD
+    usecase "Candidatar-se à Vaga" as CV
+}
+
+package "Seleção e Comunicação" {
+    usecase "Avaliar Candidatos" as AC
+    usecase "Registrar Avaliação" as RA
+    usecase "Comunicar Resultado" as CR
+}
+
+package "Relatórios" {
+    usecase "Emitir Lista de Candidatos por Vaga" as R1
+    usecase "Emitir Lista de Monitores por Disciplina" as R2
+    usecase "Emitir Lista de Monitores por Departamento" as R3
+}
+
+package "Registro de Frequência e Horas" {
+    usecase "Registrar Horas Trabalhadas" as RH
+    usecase "Validar Horas Trabalhadas" as VH
+}
+
+package "Dashboard de Gestão" {
+    usecase "Visualizar Painel de Gestão" as DG
+}
+
+Coordenador --> PV
+Coordenador --> EV
+Coordenador --> RV
+Coordenador --> VV
+
+Aluno --> VV
+Aluno --> CPC
+Aluno --> AD
+Aluno --> CV
+
+Professor --> AC
+Professor --> RA
+Professor --> CR
+Professor --> VH
+
+Departamento --> R1
+Departamento --> R2
+Departamento --> R3
+Departamento --> DG
+
+Monitor --> RH
+
+@enduml

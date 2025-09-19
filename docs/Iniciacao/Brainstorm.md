@@ -2,128 +2,126 @@
 id: brainstorm
 title: Brainstorm
 ---
- 
+
 ## Introdução
 <p align = "justify">
 O brainstorm é uma técnica de elicitação de requisitos que consiste em reunir a equipe e discutir sobre diversos tópicos gerais do projeto apresentados no documento problema de negócio. No brainstorm o diálogo é incentivado e críticas são evitadas para permitir que todos colaborem com suas próprias ideias.
 </p>
- 
+
 ## Metodologia
 <p align = "justify">
-A equipe se reuniu para debater ideias gerais sobre o projeto via..., começou .... e terminou..., onde o XXXX XXXX foi o moderador, direcionando a equipe com questões pré-elaboradas, e transcrevendo as respostas para o documento.
+A equipe se reuniu para debater ideias gerais sobre o projeto da plataforma de gestão de monitoria do IBMEC, administrada pelo setor CASA. O moderador conduziu a sessão com perguntas baseadas no documento de visão e no 5W2H, registrando as contribuições dos participantes.
 </p>
- 
+
 ## Brainstorm
- 
+
 ## Versão 1.0
- 
+
 ## Perguntas
- 
+
 ### 1. Qual o objetivo principal da aplicação?
- 
-<p align = "justify">
-<b>XXXX</b> - Deve ser uma plataforma onde qualquer pessoa possa...
-</p>
- 
-<b>ZZZ</b> - A plataforma deve fornece...
- 
-<b>YYYY</b> - O objetivo da aplicação é....
- 
-<b>WWWW</b> - O principal objetivo da aplicação é a...
- 
-<b>KKKK</b> - A plataforma deve gerenciar...
-</p>
- 
----
- 
-### 2. Como será o processo para cadastrar um novo cliente?
- 
-<p align = "justify">
-<b>XXXX</b> - O moderador deverá fazer login e...
- 
-<b>YYYY</b> - O cliente...
- 
-<b>WWWW</b> - Com o usuário logado, ele deverá...
-
-<b>ZZZZ</b> - O cliente...
- 
-<b>KKK</b> - O cliente...
- 
----
- 
-### 3. Como será a forma de adicionar produtos?
- 
-<p align = "justify">
-<b>XXXX</b> - O cliente ao cadastrar...
-</p>
- 
-<p align = "justify">
-<b>YYYYY</b> - O produto tem...
-</p>
- 
-<b>ZZZZ</b> - O produto....
- 
-<b>XXXX</b> - O produto....
-
- 
----
- 
-### 4. Outras perguntas pertinentes ao contexto
 
 <p align = "justify">
-<b>XXXX</b> - Com a localização...
- 
-<b>YYYY</b> - O cliente...
- 
-<b>ZZZ</b> - O cliente...
- 
----
- 
-### 5. "Outras perguntas pertinentes ao contexto", Como seria a forma de adicionar do cliente adicionar os produtos ?
-<p align = "justify">
-<b>XXX</b> - O cliente....
+<b>Participante 1</b> - Automatizar e centralizar o processo de análise das candidaturas de monitoria, reduzindo erros e acelerando a seleção.
 </p>
- 
-### 6. Quais informações seriam interessante para o cliente?
-<p align = "justify">
-   <b>XXX</b> - Informações...
-   
-   <b>ZZZZ</b> - O cliente usuário poderá acessar informações...
 
-   <b>WWWWs</b> - O usuário poderá ver scouts de partidas do torneio, ver as regras dos torneios, locais e data das partidas.
-   
+<p align = "justify">
+<b>Participante 2</b> - Facilitar o trabalho da equipe do CASA, permitindo um gerenciamento mais eficiente das candidaturas.
 </p>
- 
+
+<p align = "justify">
+<b>Participante 3</b> - Oferecer transparência e feedback rápido aos alunos candidatos a monitoria.
+</p>
+
+---
+
+### 2. Quem são os principais usuários da plataforma?
+
+<p align = "justify">
+<b>Participante 1</b> - Coordenadores e administradores do setor CASA.
+</p>
+
+<p align = "justify">
+<b>Participante 2</b> - Alunos candidatos a monitoria.
+</p>
+
+<p align = "justify">
+<b>Participante 3</b> - Equipe de TI para integração com sistemas acadêmicos.
+</p>
+
+---
+
+### 3. Quais funcionalidades são essenciais para o sistema?
+
+<p align = "justify">
+<b>Participante 1</b> - Cadastro e submissão de candidaturas pelos alunos.
+</p>
+
+<p align = "justify">
+<b>Participante 2</b> - Painel administrativo para análise, aprovação e rejeição de candidaturas.
+</p>
+
+<p align = "justify">
+<b>Participante 3</b> - Geração de relatórios dinâmicos e envio de notificações automáticas.
+</p>
+
+---
+
+### 4. Quais problemas o sistema deve resolver?
+
+<p align = "justify">
+<b>Participante 1</b> - Eliminar o excesso de trabalho manual e descentralizado.
+</p>
+
+<p align = "justify">
+<b>Participante 2</b> - Reduzir atrasos e erros no processo de seleção.
+</p>
+
+<p align = "justify">
+<b>Participante 3</b> - Melhorar a comunicação entre candidatos e equipe do CASA.
+</p>
+
+---
+
+### 5. Quais integrações são necessárias?
+
+<p align = "justify">
+<b>Participante 1</b> - Integração com o sistema acadêmico para validação de dados dos candidatos.
+</p>
+
+---
+
+### 6. Quais restrições ou limitações o sistema terá?
+
+<p align = "justify">
+<b>Participante 1</b> - O sistema será focado apenas na análise e gestão das candidaturas, não incluindo agendamento de sessões ou avaliação de desempenho dos monitores.
+</p>
+
+---
+
 ### Requisitos elicitados
- 
+
 |ID|Descrição|
 |----|-------------|
-|BS01| O cliente...|
-|BS02| O cliente...|
-|BS03| O cliente...|
-|BS04| O cliente...|
-|BS05| O cliente...|
-|BS06| O cliente...|
-|BS07| O cliente...|
-|BS08| O cliente...|
-|BS09| O cliente...|
-|BS10| O produto...|
-|BS11| O produto...|
-|BS12| O produto...|
-|BS13| O produto...|
-|BS14| O produto...|
-|BS15| O produto...|
- 
+|BS01| O sistema deve permitir o cadastro e submissão de candidaturas.|
+|BS02| O sistema deve automatizar a análise das candidaturas.|
+|BS03| O sistema deve permitir filtros e seleção rápida de candidatos.|
+|BS04| O sistema deve gerar relatórios dinâmicos para a equipe do CASA.|
+|BS05| O sistema deve enviar notificações automáticas aos candidatos.|
+|BS06| O sistema deve integrar-se ao sistema acadêmico do IBMEC.|
+|BS07| O sistema deve ser acessível via desktop e dispositivos móveis.|
+
 ## Conclusão
 <p align = "justify">
-Através da aplicação da técnica, foi possível elicitar alguns dos primeiros requisitos do projeto.
+Através da aplicação da técnica, foi possível elicitar os principais requisitos do projeto, alinhando as expectativas da equipe e identificando as funcionalidades essenciais para a plataforma de gestão de monitoria.
 </p>
+
 ## Referências Bibliográficas
- 
-> BARBOSA, S. D. J; DA SILVA, B. S. Interação humano-computador. Elsevier, 2010.
- 
- 
+
+> Documento de visão. Disponível em https://www... Acesso em dd/MM/yyYY  
+> 5W2H: disponível em https://www...  
+
 ## Autor(es)
 | Data | Versão | Descrição | Autor(es) |
 | -- | -- | -- | -- |
-| DD/MM/YYYY | 1.0 | Criação do documento | XXX XXXX, XXXX XXXX, YYY YYYY e ZZZ XXXX |
+| DD/MM/YYYY | 1.0 | Criação do documento | Nomes dos participantes |

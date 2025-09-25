@@ -1,87 +1,35 @@
+# Diagrama de Classes Conceitual
+
+Com base na análise de todos os documentos do projeto da **Plataforma de Gestão de Monitoria IBMEC**, foi elaborado o diagrama de classes conceitual abaixo.
+
+Este diagrama foca nas principais entidades do sistema e em como elas se relacionam, conforme descrito nos documentos de visão, requisitos e brainstorm.
+
+![Diagrama de Classes Conceitual](../plantuml-project/diagrams/diagrama_classes_conceitual.svg)
+
 ---
-id: diagrama_de_casos de uso
-title: Diagrama de Casos de Uso
----
 
-## Casos de Uso
+### Descrição Detalhada
 
-### Descrição:
+#### **Classes e Atributos**
 
-- Contas
-	- Criação
-	- Entrada
-	- Alteração
-	- Recuperar Senha
-	- Exclusão Lógica
-	- Visualização
+* **Usuario**: Classe base que representa qualquer usuário do sistema.
+    * `id`, `nome`, `email`, `senha`
+* **Aluno**: Herda de `Usuario` e representa um estudante candidato.
+    * `matricula`, `curso`, `historicoAcademico`
+* **Coordenador**: Herda de `Usuario` e representa um administrador do setor CASA.
+    * `departamento`
+* **Vaga**: Representa uma oportunidade de monitoria.
+    * `id`, `titulo`, `descricao`, `requisitos`, `status`
+* **Candidatura**: Classe que representa a submissão de um aluno a uma vaga.
+    * `id`, `dataSubmissao`, `status`
+* **Notificacao**: Usada para a comunicação com os usuários.
+    * `id`, `mensagem`, `dataEnvio`, `status`
 
-- Perfis
-	- Edição
-	- Pesquisar
-	- Visualização
-	- Seguir/Deixar de Seguir
+#### **Relacionamentos**
 
-- Postagens (Público) 	 	
-	- Criação
-	- Exclusão
-	- Interação
-	- Visualização
-
-- Mensagens (Privado)
-	- Criação
-	- Exclusão
-	- Visualização
-
-- Galerias
-	- Albuns
-- Blogs
-- Grupos
-
-### Criação de uma conta no sistema
-
-* Atores:
-
-	- Usuário
-	- Sistema
-
-- Pré-Condições:
-	- Nenhuma
-
-* Fluxo Básico:
-    1. Usuário fornece e-mail, senha e confirmações
-    2. Dados do Usuário são validados pelo Sistema
-    3. Dados do Usuário são encriptados pelo Sistema
-    4. Dados do Usuário são persistidos pelo Sistema
-    5. Sistema gera um link com prazo de expiração
-    6. Sistema envia e-mail de verificação, com o link, para o Usuário
-    7. Usuário confirma o e-mail antes do link expirar
-    8. Sistema confirma que o Cadastro do Usuário foi realizado com sucesso
-    9. Sistema redireciona o Usuário para a página de Entrada
-
-- Fluxos Alternativos:
-	- 2a. E-mail do Usuário é inválido
-		2a1. Sistema exibe mensagem de erro
-	- 2b. Senha do Usuário não respeita regras de segurança
-		- 2b1. Sistema exibe mensagem de erro
-	- 3a. Usuário tenta confirmar o e-mail depois de o link expirar
-		- 3a1. Sistema sugere que o Usuário realize um novo Cadastro
-
-### Entrada do usuário no sistema
-
-- Atores:
-	- Usuário
-	- Sistema
-
-- Pré-Condições:
-	Usuário deve estar cadastrado
-
-- Fluxo Básico:
-    - 1. Usuário fornece e-mail e senha
-	- 2. Sistema autentica o Usuário
-	- 3. Sistema redireciona o Usuário para a página inicial
-
-- Fluxos Alternativos:
-	- 2a. Dados do Usuário Inválidos
-		- 2a1. Sistema exibe mensagem de erro
-	- 3a. Primeio acesso do Usuário
-		- 3a1. Sistema redireciona o Usuário para a página de edição de perfil
+* **Herança**: `Aluno` e `Coordenador` são especializações de `Usuario`.
+* **Coordenador e Vaga**: 1 `Coordenador` gerencia (0..*) `Vagas`.
+* **Aluno e Candidatura**: 1 `Aluno` realiza (0..*) `Candidaturas`.
+* **Vaga e Candidatura**: 1 `Vaga` recebe (0..*) `Candidaturas`.
+* **Coordenador e Candidatura**: 1 `Coordenador` analisa (0..*) `Candidaturas`.
+* **Usuario e Notificação**: 1 `Usuario` pode receber (0..*) `Notificacoes`.

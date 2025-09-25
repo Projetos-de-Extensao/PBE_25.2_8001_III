@@ -1,29 +1,37 @@
+# Plataforma de Gestão de Monitoria IBMEC
+
+<img src="/home/pietro/faculdade/projeto back end/PBE_25.2_8001_III/docs/assets/Ibmec_logo.png" alt="Logo IBMEC" width="300"/>
+
 ---
-hide:
-  - navigation
-  - toc
----  
 
-# PBE_25.2_8001
+## Visão Geral
 
-<div class="grid cards" markdown>
+A Plataforma de Gestão de Monitoria do IBMEC visa automatizar e centralizar o processo de seleção de monitores, tornando-o mais eficiente, transparente e seguro para alunos e coordenadores do setor CASA.
 
--   :material-github:{ .lg .right } __PBE_25.21_8003_I__
+---
 
-    ---
+## Funcionalidades
 
-    Lorem Ipsum     Lorem Ipsum Lorem Ipsum Lorem Ipsum Lorem Ipsum
+- Cadastro e submissão de candidaturas para vagas de monitoria
+- Gerenciamento e análise das candidaturas pelo setor CASA
+- Comunicação entre candidatos e equipe administrativa
+- Geração de relatórios dinâmicos
+- Integração com o sistema acadêmico do IBMEC
 
-    [:octicons-arrow-right-24: Repositório](https://github.com/Projetos-de-Extensao/PBE_25.2_8003_I)
+---
 
--   :material-github:{ .lg .middle } __PBE_25.2_8003_II__
+## Documentação
 
-    ---
+- [Especificação de Requisitos](Elaboracao/especificacao_de_requisitos.md)
+- [Brainstorm](Iniciacao/Brainstorm.md)
+- [Casos de Uso](Elaboracao/casos_de_uso.md)
 
-    Lorem Ipsum Lorem Ipsum Lorem Ipsum
-
-    [:octicons-arrow-right-24: Repositório](https://github.com/Projetos-de-Extensao/PBE_25.2_8003_II)
+---
 
 
-</div>
+## Equipe
+
+- Pietro Baldo Albuquerque
+
+---
 

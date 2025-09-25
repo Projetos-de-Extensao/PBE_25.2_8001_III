@@ -1,150 +1,105 @@
 ---
-id: documento_de_arquitetura
-title: Documento de Arquitetura
+id: especificacao_de_requisitos
+title: Especificação de Requisitos – Plataforma de Gestão de Monitoria IBMEC (Setor CASA)
 ---
-# Documento de Arquitetura de Software (DAS)
 
-# "Nome do Projeto"
+## 1. Introdução
 
-# Introdução
+Esta especificação de requisitos descreve as funcionalidades, restrições e requisitos do sistema de gestão de monitoria do IBMEC, conforme identificado nos documentos de visão, brainstorm e casos de uso. O objetivo é automatizar e centralizar o processo de seleção de monitores, reduzindo erros, acelerando o processo e facilitando o trabalho do setor CASA.
 
-## Proposta
+---
 
-<p align = "justify">
-Este documento apresenta uma visão geral da arquitetura do sistema, utilizando diferentes visões arquiteturais para destacar diferentes aspectos do sistema. É utilizado para capturar as decisões arquiteturais significativas que fizeram parte do sistema.
-</p>
+## 2. Visão Geral do Sistema
 
-## Escopo
+O sistema permitirá:
+- Cadastro e submissão de candidaturas para vagas de monitoria.
+- Gerenciamento e análise das candidaturas pelo setor CASA.
+- Comunicação entre candidatos e equipe administrativa.
+- Geração de relatórios dinâmicos.
+- Integração com o sistema acadêmico do IBMEC.
 
-<p align = "justify">
-A aplicação "XXXX" tem o objetivo fornecer...
-</p>
+---
 
-## Definições, Acrônimos e Abreviações
+## 3. Requisitos Funcionais
 
-- MVC -
-- MVT -
-- SIGLA PARA O APP - Nome do Aplicativo
+| ID   | Requisito                                                                                   |
+|------|--------------------------------------------------------------------------------------------|
+| RF01 | O sistema deve permitir o cadastro de usuários (alunos e coordenadores).                   |
+| RF02 | O sistema deve permitir que alunos submetam candidaturas para vagas de monitoria.          |
+| RF03 | O sistema deve permitir que coordenadores publiquem, editem e removam vagas de monitoria.  |
+| RF04 | O sistema deve permitir que coordenadores visualizem, filtrem e analisem candidaturas.     |
+| RF05 | O sistema deve permitir a aprovação ou rejeição de candidaturas.                           |
+| RF06 | O sistema deve enviar notificações automáticas aos candidatos sobre o status da candidatura.|
+| RF07 | O sistema deve gerar relatórios dinâmicos sobre o processo seletivo.                       |
+| RF08 | O sistema deve permitir comunicação direta entre coordenadores e candidatos.                |
+| RF09 | O sistema deve integrar-se ao sistema acadêmico para validação de dados dos candidatos.     |
+| RF10 | O sistema deve ser acessível via desktop e dispositivos móveis.                             |
 
-## Visão Geral
+---
 
-<p align = "justify">
-O Documento de Arquitetura de Software (DAS) trata-se de uma visão geral de toda a arquitetura do sistema, observando diferentes aspectos do mesmo. Neste documento serão abordadas as seguintes visões da aplicação TCM:
-</p>
+## 4. Requisitos Não Funcionais
 
-- Caso de Uso;
-- Lógica;
-- Implantação;
-- Implementação;
-- Dados;
+| ID   | Requisito                                                                                   |
+|------|--------------------------------------------------------------------------------------------|
+| RNF01| O sistema deve garantir a segurança e privacidade dos dados dos usuários.                  |
+| RNF02| O sistema deve ser responsivo, funcionando em diferentes tamanhos de tela.                 |
+| RNF03| O sistema deve ter alta disponibilidade e desempenho adequado para o número de usuários.    |
+| RNF04| O sistema deve ser integrado apenas ao processo de seleção, não incluindo gestão de sessões ou avaliação de desempenho dos monitores. |
 
-# Representação Arquitetural
+---
 
-## Cliente-Servidor
+## 5. Restrições
 
-<p align = "justify">
-Cliente-Servidor é um modelo de arquitetura...
-</p>
+- O sistema não irá gerenciar agendamento de sessões de monitoria ou avaliação de desempenho dos monitores.
+- O acesso ao painel administrativo será restrito aos coordenadores do setor CASA.
+- A integração será feita apenas com o sistema acadêmico do IBMEC.
 
-Cliente (Frontend):
+---
 
-- View: Consiste.....
+## 6. Casos de Uso Principais
 
-Servidor (Backend):
+### 6.1. Publicar Vaga de Monitoria
+- **Ator:** Coordenador
+- **Descrição:** Permite ao coordenador criar e publicar uma nova vaga de monitoria.
 
-- Controller: faz a conexão entre as camadas...
-- Service: Responsável pela lógica...
-- Model: Responsável pela persistência...
+### 6.2. Submeter Candidatura
+- **Ator:** Aluno
+- **Descrição:** Permite ao aluno se candidatar a uma vaga de monitoria, preenchendo informações pessoais e acadêmicas.
 
-# Objetivos de Arquitetura e Restrições
+### 6.3. Analisar Candidaturas
+- **Ator:** Coordenador
+- **Descrição:** Permite ao coordenador visualizar, filtrar, aprovar ou rejeitar candidaturas.
 
-## Objetivos
+### 6.4. Gerar Relatórios
+- **Ator:** Coordenador
+- **Descrição:** Permite ao coordenador gerar relatórios sobre o processo seletivo.
 
-<p align = "justify">
-Segurança:
-   -
-Persistência:
-   - 
-Privacidade:
-   - Middlewares: Foi usado middlewares...
-Desempenho:
-   Requisições...
-Reusabilidade:
-   Componentes no Frontend...
-</p>
+### 6.5. Comunicação e Notificações
+- **Atores:** Coordenador, Aluno
+- **Descrição:** Permite o envio de mensagens e notificações automáticas sobre o status das candidaturas.
 
-## Restrições
+---
 
-<p align = "justify">
-Tamanho da tela:...
+## 7. Critérios de Aceitação
 
-Portabilidade:...
+- O sistema deve permitir que alunos se cadastrem e submetam candidaturas.
+- O coordenador deve conseguir publicar vagas, analisar e aprovar/rejeitar candidaturas.
+- O sistema deve enviar notificações automáticas aos candidatos.
+- O sistema deve gerar relatórios dinâmicos.
+- O sistema deve ser integrado ao sistema acadêmico do IBMEC.
 
-| IE | Edge  | Firefox | Chrome | Safari | Googlebot |
-| -- | ----- | ------- | ------ | ------ | --------- |
-| 11 | >= 14 | >= 52   | >= 49  | >= 10  | Sim       |
+---
 
-Serviços: Os serviços oferecidos....
+## 8. Referências
 
-Acesso a internet: A aplicação está limitada apenas a conexão com internet
+- Documento de Visão
+- Brainstorm do Projeto
+- Casos de Uso
 
-</p>
+---
 
-## Ferramentas Utilizadas
+## 9. Versionamento
 
-- XXX: Ambiente de execução...
-- XXXX: Linguagem de programação...
-  Typescript: XXXX
-- XXXX: XXXX
-- XXX: XXXX
-- XXXX: XXXX
-- XXXX: XXXX
-- XXXX: XXXX
-- XXXXX: XXXX.
-
-# Visão de Caso de Uso
-
-<p align = "justify">
-O primeiro caso de uso descreve a ação...
-</p>
-
-![Caso de uso 1](../assets/Casos_de_Uso/Exemplocaso_de_uso_1.png)
-
-![Caso de uso 2](../assets/Casos_de_Uso/Exemplocaso_de_uso_1.png)
-
-# Visão Lógica
-
-# Visão de Implantação
-
-# Visão de Implementação
-
-## Visão Geral
-
-![Diagrama de Componentes](../assets/Casos_de_Uso/Exemplocaso_de_uso_1.png)
-
-# Visão de Dados
-
-## Modelo Entidade Relacionamento (MER)
-
-#### Entidades e Relacionamentos:
-
-## Diagrama Entidade Relacionamento (DER)
-
-# Tamanho e Desempenho
-
-# Qualidade
-
-</p>
-
-# Referências Bibliográficas
-
-# Histórico de Versão
-
-| Data       | Versão | Descrição                                                            | Autor(es)                                   |
-| ---------- | ------- | ---------------------------------------------------------------------- | ------------------------------------------- |
-| 08/11/2020 | 1.0     | Criada estrutura básica do documento                                  | xxx xxx, xxx xx, xxx xx, xxx xxx e xxx xxxx |
-| 15/11/2020 | 1.1     | Representação arquitetural e objetivos e restrições arquiteturais. | Autores                                     |
-| 19/11/2020 | 1.2     | Adição dos diagramas, visões, tamanho e desempenho e qualidade      | Autores                                     |
-| 20/11/2020 | 1.3     | Adição da descrição de MER e DER                                   | Autores                                     |
-| 20/11/2020 | 1.4     | Adição do tópico de qualidade                                       | Autores                                     |
-| 20/11/2020 | 1.5     | Revisão                                                               | Autores                                     |
+| Data       | Versão | Descrição                | Autor(es)         |
+|------------|--------|--------------------------|-------------------|
+| 19/09/2025 | 1.0    | Criação do documento     | Equipe do Projeto |

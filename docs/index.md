@@ -1,6 +1,6 @@
 # Plataforma de Gestão de Monitoria IBMEC
 
-<img src="/home/pietro/faculdade/projeto back end/PBE_25.2_8001_III/docs/assets/Ibmec_logo.png" alt="Logo IBMEC" width="300"/>
+<img src="assets/Ibmec_logo.png" alt="Logo IBMEC" width="300"/>
 
 ---
 

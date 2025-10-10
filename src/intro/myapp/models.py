@@ -9,3 +9,25 @@ class Produto(models.Model):
 
     def __str__(self):
         return self.nome
+    
+class Categoria(models.Model):
+    nome = models.CharField(max_length=100)
+    descricao = models.TextField(blank=True, null=True)
+    
+    def __str__(self):
+        return self.nome
+
+class Pedido(models.Model):
+    produto = models.ForeignKey(Produto, on_delete=models.CASCADE)
+    quantidade = models.IntegerField()
+    data_pedido = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"Pedido de {self.quantidade} x {self.produto.nome}" 
+    
+class ProdutoDetalhado(models.Model):
+    produto = models.OneToOneField(Produto, on_delete=models.CASCADE)
+    detalhes = models.TextField()
+
+    def __str__(self):
+        return f"Detalhes de {self.produto.nome}"

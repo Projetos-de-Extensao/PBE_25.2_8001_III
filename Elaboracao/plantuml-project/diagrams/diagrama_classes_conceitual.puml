@@ -26,6 +26,12 @@ class Coordenador extends Usuario {
   +departamento
 }
 
+class Professor extends Usuario {
+  +titulacao
+  +departamento
+  +disciplinas
+}
+
 class Vaga {
   +id
   +titulo
@@ -54,5 +60,7 @@ Vaga "1" -- "0..*" Candidatura : recebe <
 Aluno "1" -- "0..*" Candidatura : submete >
 Coordenador "1" -- "0..*" Candidatura : analisa >
 Usuario "1" -- "0..*" Notificacao : recebe >
+Professor "1" -- "0..*" Vaga : publica >
+Professor "0..*" -- "0..*" Aluno : orienta >
 
 @enduml

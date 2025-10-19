@@ -2,18 +2,10 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
-from pathlib import Path
 
 
 def main():
     """Run administrative tasks."""
-    # Ensure parent 'src' packages are importable so apps located in sibling
-    # directories (for example src/Streaming/content_app) can be discovered.
-    # This mirrors how the other project in this repo is structured.
-    repo_root = Path(__file__).resolve().parents[1]
-    src_dir = repo_root / 'Streaming'
-    sys.path.insert(0, str(src_dir))
-
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'myproject.settings')
     try:
         from django.core.management import execute_from_command_line

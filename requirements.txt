@@ -1,0 +1,22 @@
+# Core Django
+Django==5.2.7
+djangorestframework==3.16.1
+django-cors-headers==4.9.0
+
+# Database
+# SQLite já vem com Python - sem necessidade de drivers adicionais
+
+# Dependências do Django
+asgiref==3.10.0
+sqlparse==0.5.3
+typing_extensions==4.15.0
+
+# Utilities
+python-dateutil==2.9.0.post0
+
+# Documentação (opcional - apenas para desenvolvedores que precisam gerar docs)
+# Descomente se precisar gerar a documentação do MkDocs:
+# mkdocs==1.6.1
+# mkdocs-material==9.6.22
+# mkdocs-mermaid2-plugin==1.2.3
+# mkdocs-minify-plugin==0.8.0

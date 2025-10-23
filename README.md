@@ -1,31 +1,169 @@
-# Projeto Back-End 
+# Plataforma de Gestão de Monitoria IBMEC (Setor CASA)
 
-**Código da Disciplina**: IBM8936<br>
+**Código da Disciplina**: IBM8936
 
-## Sobre 
-Plataforma de Gestão de Monitoria IBMEC (Setor CASA)
+## 📋 Sobre
 
-Este projeto tem como objetivo automatizar e centralizar o processo de seleção de monitores do IBMEC, facilitando o trabalho do setor CASA, reduzindo erros e acelerando o processo seletivo.
+Sistema integrado para automatizar e centralizar o processo de seleção de monitores do IBMEC, facilitando o trabalho do setor CASA, reduzindo erros e acelerando o processo seletivo.
 
-## Funcionalidades Principais
+## ✨ Funcionalidades Principais
 
-- Cadastro de usuários (alunos e coordenadores)
-- Submissão e análise de candidaturas para vagas de monitoria
-- Publicação, edição e remoção de vagas
-- Aprovação e rejeição de candidaturas
-- Notificações automáticas aos candidatos
-- Geração de relatórios dinâmicos
-- Comunicação entre candidatos e equipe administrativa
-- Integração com o sistema acadêmico do IBMEC
+- 👥 Cadastro de usuários (alunos, professores e coordenadores)
+- 📝 Submissão e análise de candidaturas para vagas de monitoria
+- 📢 Publicação, edição e remoção de vagas
+- ✅ Aprovação e rejeição de candidaturas
+- 🔔 Sistema de notificações
+- 📊 Filtros e visualização de vagas
+- 💬 Gestão de perfis de usuários
 
-## Instalação 
-**Linguagens**: Python, Django<br>
-**Tecnologias**: Github, Visual Studio Code<br>
- os pré-requisitos para rodar o seu projeto são UX, Engenharia de Dados, POO.
+## 🛠️ Tecnologias
 
-## Equipe
+### Backend
+- **Django 5.2.7** - Framework web
+- **Django REST Framework** - API RESTful
+- **SQLite** - Banco de dados
+- **Python 3.x** - Linguagem de programação
 
-- Pietro Baldo ALbuquerque
+### Frontend
+- **React** - Biblioteca JavaScript
+- **Vite** - Build tool
+- **Tailwind CSS** - Framework CSS
+- **shadcn/ui** - Componentes UI
+- **Lucide React** - Ícones
+
+## 🚀 Como Executar
+
+### Pré-requisitos
+
+- Python 3.8+
+- Node.js 18+ (LTS)
+- Git
+
+### Instalação e Execução
+
+1. **Clone o repositório**
+```bash
+git clone <url-do-repositorio>
+cd "PBE_25.2_8001_III"
+```
+
+2. **Configure o ambiente virtual Python**
+```bash
+python -m venv .venv
+source .venv/bin/activate  # Linux/Mac
+# ou
+.venv\Scripts\activate  # Windows
+```
+
+3. **Instale as dependências do backend**
+```bash
+pip install -r requirements.txt
+```
+
+4. **Configure o banco de dados**
+```bash
+cd src/monitoria
+python manage.py migrate
+```
+
+5. **Instale as dependências do frontend**
+```bash
+cd frontend
+npm install
+```
+
+6. **Faça o build do frontend**
+```bash
+npm run build
+```
+
+7. **Colete os arquivos estáticos**
+```bash
+cd ..  # voltar para src/monitoria
+python manage.py collectstatic --noinput
+```
+
+8. **Inicie o servidor**
+```bash
+python manage.py runserver
+```
+
+9. **Acesse a aplicação**
+
+Abra seu navegador em: **http://127.0.0.1:8000/**
+
+## 🔧 Desenvolvimento
+
+### Modo de desenvolvimento do frontend (com hot-reload)
+
+Se você precisa fazer alterações no frontend com hot-reload:
+
+```bash
+cd src/monitoria/frontend
+npm run dev
+```
+
+O Vite irá rodar em: **http://localhost:5173/**
+
+Após fazer as alterações, faça o build novamente:
+
+```bash
+npm run build
+cd ..
+python manage.py collectstatic --noinput
+```
+
+## 📁 Estrutura do Projeto
+
+```
+PBE_25.2_8001_III/
+├── src/
+│   └── monitoria/              # Projeto Django principal
+│       ├── myapp/              # App Django (models, views, serializers)
+│       ├── myproject/          # Configurações Django
+│       ├── frontend/           # Aplicação React
+│       │   ├── src/
+│       │   ├── build/          # Build de produção
+│       │   └── package.json
+│       ├── manage.py
+│       └── db.sqlite3
+├── docs/                       # Documentação do projeto
+├── .venv/                      # Ambiente virtual Python
+└── README.md
+```
+
+## 🔑 Credenciais de Teste
+
+O sistema vem com alguns usuários de teste:
+
+**Aluno:**
+- Email: `joao@ibmec.edu.br`
+- Senha: `senha123`
+
+**Professor:**
+- Email: `ana.silva@ibmec.edu.br`
+- Senha: `senha123`
+
+## 📚 API Endpoints
+
+A API REST está disponível em `/api/`:
+
+- `GET /api/vagas/` - Lista todas as vagas
+- `GET /api/vagas/abertas/` - Lista vagas abertas
+- `POST /api/auth/login/` - Login de usuário
+- `POST /api/auth/cadastro/` - Cadastro de usuário
+- `GET /api/alunos/` - Lista alunos
+- `GET /api/candidaturas/` - Lista candidaturas
+
+Para ver todos os endpoints, acesse: **http://127.0.0.1:8000/api/**
+
+## 👥 Equipe
+
+- Pietro Baldo Albuquerque
 - Vitor Alexandre Ribeiro
 - Matheus Reis De Carvalho
 - Guilherme Reis de Carvalho
+
+## 📄 Licença
+
+Este projeto está sob a licença especificada no arquivo LICENSE.

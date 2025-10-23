@@ -1,0 +1,48 @@
+# ============================================
+# PROJETO DE FACULDADE - CONFIGURAÇÃO COMPARTILHADA
+# ============================================
+# Este .gitignore mantém todos os arquivos necessários para
+# o projeto funcionar em diferentes máquinas.
+# Ignora apenas arquivos temporários e bibliotecas externas.
+# ============================================
+
+# CACHE E ARQUIVOS TEMPORÁRIOS
+# (Gerados automaticamente ao rodar o projeto)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+src/monitoria/frontend/.vite/
+*.log
+
+# BIBLIOTECAS E DEPENDÊNCIAS EXTERNAS
+# (Instaladas via pip install / npm install)
+# Mantém: .venv/, package.json, requirements.txt
+# Ignora apenas: node_modules (muito pesado - 100s de MB)
+node_modules/
+
+# ARQUIVOS PESSOAIS DO DESENVOLVEDOR
+# (Cada pessoa configura seu editor do jeito que quiser)
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ARQUIVOS DE SISTEMA OPERACIONAL
+.DS_Store
+Thumbs.db
+
+# ARQUIVOS GERADOS / BUILD
+# (Recriados com comandos: mkdocs build, collectstatic)
+site/
+/staticfiles/
+
+# ============================================
+# MANTIDOS NO REPOSITÓRIO (IMPORTANTES):
+# ✅ .venv/ - Ambiente virtual Python
+# ✅ db.sqlite3 - Banco de dados com dados de teste
+# ✅ package.json e package-lock.json - Lista de dependências
+# ✅ requirements.txt - Dependências Python
+# ✅ frontend/build/ - Build do React (servido pelo Django)
+# ✅ Todos os arquivos .py, .js, .jsx, etc.
+# ============================================

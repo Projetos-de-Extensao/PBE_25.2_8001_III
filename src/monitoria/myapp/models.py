@@ -77,4 +77,17 @@ class Candidatura(models.Model):
     class Meta:
         verbose_name = "Candidatura"
         verbose_name_plural = "Candidaturas"
+
+
+class Disciplina(models.Model):
+    nome = models.CharField(max_length=100)
+    codigo = models.CharField(max_length=20, unique=True)
+    descricao = models.TextField()
+
+    def __str__(self):
+        return f"{self.nome} ({self.codigo})"
+    
+    class Meta:
+        verbose_name = "Disciplina"
+        verbose_name_plural = "Disciplinas"
     

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Usuario, Aluno, Professor, Coordenador, VagaMonitoria, Candidatura
+from .models import Usuario, Aluno, Professor, Coordenador, VagaMonitoria, Candidatura, Disciplina
 # Register your models here.
 
 admin.site.register(Usuario)
@@ -8,3 +8,4 @@ admin.site.register(Professor)
 admin.site.register(Coordenador)
 admin.site.register(VagaMonitoria)
 admin.site.register(Candidatura)
+admin.site.register(Disciplina)

@@ -236,3 +236,5 @@ class CandidaturaViewSet(viewsets.ModelViewSet):
             serializer = self.get_serializer(candidaturas, many=True)
             return Response(serializer.data)
         return Response({'erro': 'Parâmetro vaga_id é obrigatório'}, status=400)
+    
+

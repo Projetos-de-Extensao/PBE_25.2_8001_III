@@ -1,0 +1,76 @@
+@startuml
+skinparam actorStyle awesome
+left to right direction
+
+title Diagrama de Casos de Uso - Sistema de Monitoria
+
+' Atores
+actor "Aluno" as aluno
+actor "Professor" as professor
+actor "Coordenador" as coordenador
+
+' Casos de uso - Autenticação
+rectangle "Sistema de Monitoria" {
+  usecase "Cadastrar-se" as UC01
+  usecase "Fazer Login" as UC02
+  usecase "Fazer Logout" as UC03
+  
+  ' Casos de uso - Aluno
+  usecase "Visualizar Vagas" as UC04
+  usecase "Filtrar Vagas" as UC05
+  usecase "Ver Detalhes da Vaga" as UC06
+  usecase "Candidatar-se à Vaga" as UC07
+  usecase "Ver Minhas Candidaturas" as UC08
+  
+  ' Casos de uso - Professor
+  usecase "Criar Vaga de Monitoria" as UC09
+  usecase "Editar Vaga" as UC10
+  usecase "Excluir Vaga" as UC11
+  usecase "Ver Candidaturas da Vaga" as UC12
+  usecase "Marcar Entrevista" as UC13
+  
+  ' Casos de uso - Coordenador
+  usecase "Gerenciar Cursos" as UC14
+  usecase "Gerenciar Disciplinas" as UC15
+  usecase "Aprovar Vagas" as UC16
+}
+
+' Relações - Autenticação (todos os atores)
+aluno --> UC01
+aluno --> UC02
+aluno --> UC03
+
+professor --> UC01
+professor --> UC02
+professor --> UC03
+
+coordenador --> UC02
+coordenador --> UC03
+
+' Relações - Aluno
+aluno --> UC04
+aluno --> UC05
+aluno --> UC06
+aluno --> UC07
+aluno --> UC08
+
+' Relações - Professor
+professor --> UC09
+professor --> UC10
+professor --> UC11
+professor --> UC12
+professor --> UC13
+
+' Relações - Coordenador
+coordenador --> UC14
+coordenador --> UC15
+coordenador --> UC16
+
+' Extensões e inclusões
+UC04 ..> UC05 : <<extend>>
+UC04 ..> UC06 : <<extend>>
+UC07 ..> UC02 : <<include>>
+UC09 ..> UC02 : <<include>>
+UC13 ..> UC12 : <<include>>
+
+@enduml

@@ -1,0 +1,63 @@
+@startuml
+title Diagrama de Sequência - Cadastro e Login
+
+actor "Aluno" as aluno
+participant "Frontend\n(React)" as frontend
+participant "Backend\n(Django API)" as backend
+database "Banco de Dados" as db
+
+== Fluxo de Cadastro ==
+aluno -> frontend : Acessa /login
+frontend -> aluno : Exibe opções:\nLogin | Cadastro
+aluno -> frontend : Clica em "Cadastrar"
+frontend -> aluno : Exibe formulário
+
+aluno -> frontend : Preenche dados:\n- Nome\n- Email institucional\n- Senha\n- Tipo (Aluno/Professor)\n- Matrícula/Departamento\n- Curso
+
+frontend -> backend : POST /api/auth/cadastro/\n{nome, email, senha,\ntipo_usuario, matricula, curso}
+
+backend -> backend : Valida dados\n(email único, campos obrigatórios)
+
+alt Dados válidos
+  backend -> db : Cria Usuario
+  db --> backend : Usuario criado
+  backend -> db : Cria perfil\n(Aluno ou Professor)
+  db --> backend : Perfil criado
+  backend --> frontend : 201 Created\n{sucesso, tipo_usuario, usuario}
+  frontend -> aluno : Exibe mensagem de sucesso\ne redireciona para login
+else Email já existe
+  backend --> frontend : 400 Bad Request\n{erro: "Email já cadastrado"}
+  frontend -> aluno : Exibe erro
+end
+
+== Fluxo de Login ==
+aluno -> frontend : Preenche credenciais\n(email e senha)
+frontend -> backend : POST /api/auth/login/\n{email, senha}
+
+backend -> db : Busca usuário por email
+db --> backend : Usuario encontrado
+
+backend -> backend : Valida senha\n(authenticate)
+
+alt Credenciais válidas
+  backend -> backend : Cria sessão (login)
+  backend -> db : Busca perfil\n(Aluno/Professor/Coordenador)
+  db --> backend : Perfil encontrado
+  backend --> frontend : 200 OK\n{sucesso, tipo_usuario,\nusuario, perfil}
+  
+  frontend -> frontend : Armazena dados\ndo usuário
+  
+  alt tipo_usuario == "aluno"
+    frontend -> aluno : Redireciona para /aluno
+  else tipo_usuario == "professor"
+    frontend -> aluno : Redireciona para /professor
+  else tipo_usuario == "coordenador"
+    frontend -> aluno : Redireciona para /admin
+  end
+  
+else Credenciais inválidas
+  backend --> frontend : 401 Unauthorized\n{erro: "Credenciais inválidas"}
+  frontend -> aluno : Exibe erro
+end
+
+@enduml

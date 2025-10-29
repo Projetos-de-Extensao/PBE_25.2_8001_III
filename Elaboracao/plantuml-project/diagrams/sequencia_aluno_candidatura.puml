@@ -1,0 +1,79 @@
+@startuml
+title Diagrama de Sequência - Aluno Candidata-se a Vaga
+
+actor "Aluno" as aluno
+participant "Frontend\n(React)" as frontend
+participant "Backend\n(Django API)" as backend
+database "Banco de Dados" as db
+
+aluno -> frontend : Acessa /aluno
+
+frontend -> backend : GET /api/auth/me/
+backend -> db : Busca usuário autenticado
+db --> backend : Usuario + perfil Aluno
+backend --> frontend : 200 OK\n{tipo_usuario: "aluno",\nperfil: {curso, matricula}}
+
+frontend -> backend : GET /api/vagas/
+note right
+  Backend filtra automaticamente:
+  - status = 'Aberta'
+  - curso = curso do aluno
+end note
+
+backend -> db : SELECT vagas WHERE\nstatus='Aberta' AND\ndisciplina.curso = aluno.curso
+db --> backend : Lista de vagas
+
+backend --> frontend : 200 OK\n[{vaga1}, {vaga2}, ...]
+frontend -> aluno : Exibe lista de vagas\ndo curso dele
+
+== Aluno Filtra Vagas ==
+aluno -> frontend : Aplica filtros\n(nome, período, tipo)
+frontend -> backend : GET /api/vagas/\n?nome=Algoritmos&tipo=Monitoria
+backend -> db : SELECT com filtros
+db --> backend : Vagas filtradas
+backend --> frontend : 200 OK [vagas]
+frontend -> aluno : Exibe vagas filtradas
+
+== Aluno Vê Detalhes ==
+aluno -> frontend : Clica em "Ver Detalhes"
+frontend -> backend : GET /api/vagas/{id}/
+backend -> db : SELECT vaga WHERE id={id}
+db --> backend : Detalhes completos da vaga
+backend --> frontend : 200 OK {vaga}
+frontend -> aluno : Exibe modal com:\n- Disciplina\n- Professor\n- CR mínimo\n- Horas\n- Descrição
+
+== Aluno Candidata-se ==
+aluno -> frontend : Clica em "Candidatar-se"
+frontend -> backend : POST /api/candidaturas/\n{vaga_id: X}
+
+note right of backend
+  aluno_id é inferido
+  automaticamente do
+  usuário autenticado
+end note
+
+backend -> db : Verifica se já existe\ncandidatura (aluno + vaga)
+
+alt Candidatura não existe
+  backend -> db : INSERT candidatura\n(aluno, vaga, status='Pendente')
+  db --> backend : Candidatura criada
+  backend --> frontend : 201 Created\n{candidatura}
+  frontend -> aluno : Exibe mensagem:\n"Candidatura enviada!"
+else Candidatura já existe
+  backend --> frontend : 400 Bad Request\n{erro: "Já candidatado"}
+  frontend -> aluno : Exibe erro
+end
+
+== Aluno Vê Suas Candidaturas ==
+aluno -> frontend : Acessa "Minhas Candidaturas"
+frontend -> backend : GET /api/candidaturas/
+note right
+  Backend filtra automaticamente
+  por aluno autenticado
+end note
+backend -> db : SELECT candidaturas\nWHERE aluno = aluno_autenticado
+db --> backend : Lista de candidaturas
+backend --> frontend : 200 OK [{candidatura1}, ...]
+frontend -> aluno : Exibe candidaturas com:\n- Disciplina\n- Status (Pendente/Entrevista/...)\n- Data
+
+@enduml

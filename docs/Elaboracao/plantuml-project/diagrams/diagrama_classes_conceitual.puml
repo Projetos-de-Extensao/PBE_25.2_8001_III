@@ -1,66 +1,88 @@
 @startuml
-' Definição de estilo
 skinparam classAttributeIconSize 0
 skinparam style strictuml
 hide empty members
 
-' Título do Diagrama
-title Diagrama de Classes Conceitual - Gestão de Monitoria IBMEC
+title Diagrama de Classes Conceitual - Plataforma de Monitoria
 
-' --- Classes ---
+' Foco em clareza do domínio, menos detalhes técnicos do Django
 
-class Usuario {
+class Usuario <<entidade>> {
   +id
   +nome
   +email
-  +senha
 }
 
-class Aluno extends Usuario {
+class Aluno <<papel>> {
   +matricula
   +curso
-  +historicoAcademico
 }
 
-class Coordenador extends Usuario {
+class Professor <<papel>> {
   +departamento
 }
 
-class Professor extends Usuario {
-  +titulacao
+class Coordenador <<papel>> {
   +departamento
-  +disciplinas
 }
 
-class Vaga {
-  +id
-  +titulo
+class Curso <<entidade>> {
+  +codigo
+  +nome
   +descricao
-  +requisitos
+}
+
+class Disciplina <<entidade>> {
+  +codigo
+  +nome
+  +periodo
+}
+
+class VagaMonitoria <<entidade>> {
+  +tipo
+  +descricao
+  +cr_minimo
+  +horas
+  +remuneracao
   +status
 }
 
-class Candidatura {
-  +id
-  +dataSubmissao
+class Candidatura <<entidade>> {
   +status
+  +criado_em
 }
 
-class Notificacao {
-  +id
-  +mensagem
-  +dataEnvio
-  +status
+class HistoricoAlunoDisciplina <<associação>> {
+  +cr
 }
 
-' --- Relacionamentos ---
+' Herança conceitual de papéis
+Usuario <|-- Aluno
+Usuario <|-- Professor
+Usuario <|-- Coordenador
 
-Coordenador "1" -- "0..*" Vaga : gerencia >
-Vaga "1" -- "0..*" Candidatura : recebe <
-Aluno "1" -- "0..*" Candidatura : submete >
-Coordenador "1" -- "0..*" Candidatura : analisa >
-Usuario "1" -- "0..*" Notificacao : recebe >
-Professor "0..*" -- "0..*" Aluno : orienta >
-Professor "1" -- "0..*" Candidatura : orientaEnvia >
+' Relacionamentos principais
+Curso "1" -- "*" Disciplina : oferece >
+Professor "1" -- "*" Disciplina : ministra >
+Coordenador "*" -- "*" Curso : coordena >
+
+Aluno "1" -- "*" Candidatura : submete >
+VagaMonitoria "1" -- "*" Candidatura : recebe <
+
+Disciplina "1" -- "*" VagaMonitoria : abre >
+Professor "1" -- "*" VagaMonitoria : responsável >
+
+Aluno "1" -- "*" HistoricoAlunoDisciplina
+Disciplina "1" -- "*" HistoricoAlunoDisciplina
+
+note right of Disciplina
+Mesmo nome pode existir para professores
+ou cursos diferentes.
+end note
+
+note bottom of HistoricoAlunoDisciplina
+Um aluno possui no máximo um histórico
+por disciplina.
+end note
 
 @enduml

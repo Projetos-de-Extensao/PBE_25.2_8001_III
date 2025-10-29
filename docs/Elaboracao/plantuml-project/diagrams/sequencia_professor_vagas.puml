@@ -1,0 +1,115 @@
+@startuml
+title Diagrama de Sequência - Professor Gerencia Vagas
+
+actor "Professor" as prof
+participant "Frontend\n(React)" as frontend
+participant "Backend\n(Django API)" as backend
+database "Banco de Dados" as db
+
+prof -> frontend : Acessa /professor
+
+frontend -> backend : GET /api/auth/me/
+backend -> db : Busca usuário autenticado
+db --> backend : Usuario + perfil Professor
+backend --> frontend : 200 OK\n{tipo_usuario: "professor",\nperfil: {departamento}}
+
+frontend -> backend : GET /api/vagas/
+note right
+  Backend filtra automaticamente:
+  vagas onde professor = professor_autenticado
+end note
+
+backend -> db : SELECT vagas WHERE\nprofessor_id = professor.id
+db --> backend : Vagas do professor
+
+backend --> frontend : 200 OK\n[{vaga1}, {vaga2}, ...]
+frontend -> prof : Exibe suas vagas
+
+== Professor Cria Nova Vaga ==
+prof -> frontend : Clica em "Criar Vaga"
+frontend -> prof : Exibe formulário
+
+prof -> frontend : Preenche:\n- Disciplina\n- Tipo (Monitoria/TA)\n- Descrição\n- CR mínimo\n- Horas\n- Remuneração
+
+frontend -> backend : POST /api/vagas/\n{disciplina_id, professor_id,\ntipo, descricao, cr_minimo,\nhoras, remuneracao, status}
+
+backend -> db : Valida:\n- Disciplina existe?\n- Professor ministra disciplina?
+
+alt Dados válidos
+  backend -> db : INSERT vaga
+  db --> backend : Vaga criada
+  backend --> frontend : 201 Created {vaga}
+  frontend -> prof : Exibe mensagem de sucesso\ne atualiza lista
+else Erro de validação
+  backend --> frontend : 400 Bad Request {erro}
+  frontend -> prof : Exibe erro
+end
+
+== Professor Edita Vaga ==
+prof -> frontend : Clica em "Editar" na vaga
+frontend -> prof : Exibe formulário preenchido
+
+prof -> frontend : Altera dados\n(ex.: status, descrição)
+frontend -> backend : PATCH /api/vagas/{id}/\n{status: "Fechada", descricao: "..."}
+
+backend -> db : Verifica se vaga pertence\nao professor
+alt Professor é dono da vaga
+  backend -> db : UPDATE vaga
+  db --> backend : Vaga atualizada
+  backend --> frontend : 200 OK {vaga}
+  frontend -> prof : Atualiza lista
+else Professor não é dono
+  backend --> frontend : 403 Forbidden
+  frontend -> prof : Exibe erro
+end
+
+== Professor Vê Candidaturas ==
+prof -> frontend : Clica em "Ver Candidaturas"
+frontend -> backend : GET /api/vagas/{id}/candidaturas/
+
+backend -> db : SELECT candidaturas\nWHERE vaga_id = {id}
+db --> backend : Lista de candidatos
+
+backend --> frontend : 200 OK\n[{candidatura1:\n  {aluno_nome, matricula,\n  status, criado_em}}, ...]
+
+frontend -> prof : Exibe tabela:\n- Nome do aluno\n- Matrícula\n- Status\n- Data de candidatura
+
+== Professor Marca Entrevista ==
+prof -> frontend : Seleciona candidato\ne clica "Marcar Entrevista"
+frontend -> prof : Exibe modal para data
+
+prof -> frontend : Informa data da entrevista
+frontend -> backend : POST /api/candidaturas/{id}/\nmarcar_entrevista/\n{data_entrevista: "2025-11-05T14:00"}
+
+backend -> db : Verifica se professor\né dono da vaga
+
+alt Professor é responsável
+  backend -> db : UPDATE candidatura\nstatus='Entrevista Marcada'
+  db --> backend : Candidatura atualizada
+  backend --> frontend : 200 OK\n{candidatura}
+  frontend -> prof : Exibe confirmação
+else Professor não é responsável
+  backend --> frontend : 403 Forbidden
+  frontend -> prof : Exibe erro
+end
+
+== Professor Exclui Vaga ==
+prof -> frontend : Clica em "Excluir Vaga"
+frontend -> prof : Confirma ação
+
+prof -> frontend : Confirma exclusão
+frontend -> backend : DELETE /api/vagas/{id}/
+
+backend -> db : Verifica se vaga\npertence ao professor
+
+alt Professor é dono
+  backend -> db : DELETE vaga
+  db --> backend : Vaga excluída
+  backend --> frontend : 204 No Content
+  frontend -> prof : Remove vaga da lista
+else Professor não é dono
+  backend --> frontend : 403 Forbidden
+  frontend -> prof : Exibe erro
+end
+
+@enduml

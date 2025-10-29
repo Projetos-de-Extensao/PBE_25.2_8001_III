@@ -15,5 +15,7 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('api/auth/login/', views.api_login, name='api-login'),
     path('api/auth/cadastro/', views.api_cadastro, name='api-cadastro'),
+    path('api/auth/logout/', views.api_logout, name='api-logout'),
+    path('api/auth/me/', views.api_me, name='api-me'),
     path('api/', include(router.urls)),
 ]

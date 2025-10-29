@@ -132,6 +132,9 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Custom User Model
+AUTH_USER_MODEL = 'myapp.Usuario'
+
 # CORS Settings - Permitir requisições do frontend React
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",  # Vite default port

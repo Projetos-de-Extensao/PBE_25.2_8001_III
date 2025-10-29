@@ -1,87 +1,108 @@
 ---
-id: diagrama_de_casos de uso
-title: Diagrama de Casos de Uso
+id: diagramas_de_sequencia
+title: Diagramas de Sequência - Sistema de Monitoria
 ---
 
-## Casos de Uso
+# Diagramas de Sequência
 
-### Descrição:
+Os diagramas de sequência ilustram os principais fluxos de interação entre usuários, frontend e backend do sistema de monitoria.
 
-- Contas
-	- Criação
-	- Entrada
-	- Alteração
-	- Recuperar Senha
-	- Exclusão Lógica
-	- Visualização
+## 1. Cadastro e Login
 
-- Perfis
-	- Edição
-	- Pesquisar
-	- Visualização
-	- Seguir/Deixar de Seguir
+![Sequência: Cadastro e Login](plantuml-project/diagrams/sequencia_cadastro_login.svg)
 
-- Postagens (Público) 	 	
-	- Criação
-	- Exclusão
-	- Interação
-	- Visualização
+### Descrição
+Este diagrama mostra o fluxo completo desde o cadastro de um novo usuário até o login e redirecionamento baseado no tipo de perfil (Aluno/Professor/Coordenador).
 
-- Mensagens (Privado)
-	- Criação
-	- Exclusão
-	- Visualização
+**Atores:**
+- Aluno (ou Professor)
+- Frontend React
+- Backend Django API
+- Banco de Dados
 
-- Galerias
-	- Albuns
-- Blogs
-- Grupos
+**Principais Etapas:**
+1. Usuário acessa `/login` e escolhe cadastrar-se
+2. Preenche formulário com dados pessoais e tipo de usuário
+3. Backend valida dados e cria Usuario + perfil correspondente
+4. Após cadastro, usuário faz login
+5. Sistema autentica, cria sessão e retorna tipo de usuário
+6. Frontend redireciona para dashboard correspondente (/aluno, /professor ou /admin)
 
-### Criação de uma conta no sistema
+---
 
-* Atores:
+## 2. Aluno Candidata-se a Vaga
 
-	- Usuário
-	- Sistema
+![Sequência: Aluno Candidatura](plantuml-project/diagrams/sequencia_aluno_candidatura.svg)
 
-- Pré-Condições:
-	- Nenhuma
+### Descrição
+Fluxo de um aluno visualizando vagas do seu curso, aplicando filtros, vendo detalhes e candidatando-se a uma vaga.
 
-* Fluxo Básico:
-    1. Usuário fornece e-mail, senha e confirmações
-    2. Dados do Usuário são validados pelo Sistema
-    3. Dados do Usuário são encriptados pelo Sistema
-    4. Dados do Usuário são persistidos pelo Sistema
-    5. Sistema gera um link com prazo de expiração
-    6. Sistema envia e-mail de verificação, com o link, para o Usuário
-    7. Usuário confirma o e-mail antes do link expirar
-    8. Sistema confirma que o Cadastro do Usuário foi realizado com sucesso
-    9. Sistema redireciona o Usuário para a página de Entrada
+**Principais Etapas:**
+1. Aluno acessa `/aluno`
+2. Sistema carrega vagas abertas automaticamente filtradas por curso do aluno
+3. Aluno pode aplicar filtros adicionais (nome, período, tipo)
+4. Aluno visualiza detalhes de uma vaga
+5. Aluno se candidata (sistema associa automaticamente ao aluno autenticado)
+6. Sistema verifica duplicidade e cria candidatura
+7. Aluno pode visualizar suas candidaturas em andamento
 
-- Fluxos Alternativos:
-	- 2a. E-mail do Usuário é inválido
-		2a1. Sistema exibe mensagem de erro
-	- 2b. Senha do Usuário não respeita regras de segurança
-		- 2b1. Sistema exibe mensagem de erro
-	- 3a. Usuário tenta confirmar o e-mail depois de o link expirar
-		- 3a1. Sistema sugere que o Usuário realize um novo Cadastro
+**Filtros Inteligentes:**
+- Backend retorna apenas vagas abertas do curso do aluno
+- `aluno_id` é inferido automaticamente na criação da candidatura
 
-### Entrada do usuário no sistema
+---
 
-- Atores:
-	- Usuário
-	- Sistema
+## 3. Professor Gerencia Vagas
 
-- Pré-Condições:
-	Usuário deve estar cadastrado
+![Sequência: Professor Vagas](plantuml-project/diagrams/sequencia_professor_vagas.svg)
 
-- Fluxo Básico:
-    - 1. Usuário fornece e-mail e senha
-	- 2. Sistema autentica o Usuário
-	- 3. Sistema redireciona o Usuário para a página inicial
+### Descrição
+Fluxo completo de um professor gerenciando vagas de monitoria: criar, editar, visualizar candidaturas, marcar entrevistas e excluir vagas.
 
-- Fluxos Alternativos:
-	- 2a. Dados do Usuário Inválidos
-		- 2a1. Sistema exibe mensagem de erro
-	- 3a. Primeio acesso do Usuário
-		- 3a1. Sistema redireciona o Usuário para a página de edição de perfil
+**Principais Etapas:**
+
+### Criar Vaga
+1. Professor acessa `/professor`
+2. Sistema carrega apenas vagas que ele criou
+3. Professor clica em "Criar Vaga"
+4. Preenche: disciplina, tipo, descrição, CR mínimo, horas, remuneração
+5. Sistema valida e cria vaga
+
+### Editar Vaga
+1. Professor clica em "Editar" em uma vaga existente
+2. Altera dados (ex.: status, descrição)
+3. Sistema verifica permissão (professor deve ser dono da vaga)
+4. Atualiza vaga
+
+### Ver Candidaturas
+1. Professor clica em "Ver Candidaturas"
+2. Sistema lista candidatos com nome, matrícula, status e data
+
+### Marcar Entrevista
+1. Professor seleciona candidato
+2. Informa data da entrevista
+3. Sistema atualiza status da candidatura para "Entrevista Marcada"
+
+### Excluir Vaga
+1. Professor confirma exclusão
+2. Sistema verifica permissão e remove vaga
+
+**Segurança:**
+- Apenas professor dono da vaga pode editar ou excluir
+- Apenas professor responsável pela vaga pode marcar entrevistas
+
+---
+
+## Tecnologias
+
+- **Frontend**: React + Vite
+- **Backend**: Django 5.2 + Django REST Framework
+- **Autenticação**: SessionAuthentication (cookie-based)
+- **Banco de Dados**: SQLite (dev) / PostgreSQL (produção recomendado)
+
+---
+
+**Nota**: Para regenerar os diagramas SVG:
+```bash
+plantuml -tsvg docs/Elaboracao/plantuml-project/diagrams/sequencia_*.puml
+```

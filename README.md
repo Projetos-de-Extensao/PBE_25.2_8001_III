@@ -137,11 +137,15 @@ PBE_25.2_8001_III/
 O sistema vem com alguns usuários de teste:
 
 **Aluno:**
-- Email: `joao@ibmec.edu.br`
+- Email: `aluno@ibmec.edu.br`
 - Senha: `senha123`
 
-**Professor:**
-- Email: `ana.silva@ibmec.edu.br`
+**Admin/Professor:**
+- Email: `admin@ibmec.edu.br`
+- Senha: `admin123`
+
+**Coordenador:**
+- Email: `coord@ibmec.edu.br`
 - Senha: `senha123`
 
 ## 📚 API Endpoints

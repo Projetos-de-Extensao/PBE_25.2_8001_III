@@ -36,6 +36,7 @@ Documentação completa dos endpoints implementados conforme `login.md`.
   "sucesso": true,
   "mensagem": "Usuário cadastrado com sucesso",
   "tipo_usuario": "aluno",
+  "token": "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6q7r8s9t0",
   "usuario": {
     "id": 5,
     "nome": "João Silva",
@@ -43,6 +44,8 @@ Documentação completa dos endpoints implementados conforme `login.md`.
   }
 }
 ```
+
+**Importante:** Armazene o `token` retornado para usar em requisições futuras.
 
 ---
 
@@ -61,6 +64,7 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 ```json
 {
   "sucesso": true,
+  "token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b",
   "tipo_usuario": "aluno",
   "usuario": {
     "id": 5,
@@ -76,6 +80,8 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 ```
 
 **Uso no frontend:**
+- Armazene o `token` retornado (ex: localStorage ou cookie)
+- Envie em todas as requisições: `Authorization: Token <token>`
 - Após login bem-sucedido, redirecionar para:
   - `/aluno` se `tipo_usuario === 'aluno'`
   - `/professor` se `tipo_usuario === 'professor'`
@@ -86,7 +92,10 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 ### 3. Verificar Usuário Autenticado
 **Endpoint:** `GET /api/auth/me/`
 
-**Headers:** Cookie de sessão (automaticamente enviado após login)
+**Headers:** 
+```
+Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+```
 
 **Resposta (200 OK):**
 ```json
@@ -108,6 +117,11 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 ### 4. Logout
 **Endpoint:** `POST /api/auth/logout/`
 
+**Headers:**
+```
+Authorization: Token 9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b
+```
+
 **Resposta (200 OK):**
 ```json
 {
@@ -116,11 +130,40 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 }
 ```
 
+**Nota:** O token é revogado no servidor e não poderá mais ser usado.
+
+---
+
+### 5. Obter Token (Endpoint Alternativo)
+**Endpoint:** `POST /api/auth/token/`
+
+**Body:**
+```json
+{
+  "username": "joao@ibmec.edu.br",
+  "password": "senha123"
+}
+```
+
+**Resposta (200 OK):**
+```json
+{
+  "token": "9944b09199c62bcf9418ad846dd0e4bbdfc6ee4b"
+}
+```
+
+**Nota:** Este é o endpoint padrão do DRF. Use `/api/auth/login/` para obter também informações do usuário.
+
 ---
 
 ## Vagas de Monitoria
 
-### 5. Listar Vagas (com filtros inteligentes)
+**Autenticação necessária:** Todas as requisições devem incluir o header:
+```
+Authorization: Token <seu-token>
+```
+
+### 6. Listar Vagas (com filtros inteligentes)
 **Endpoint:** `GET /api/vagas/`
 
 **Comportamento automático por tipo de usuário:**
@@ -346,6 +389,8 @@ Documentação completa dos endpoints implementados conforme `login.md`.
 
 ---
 
-**Autenticação:** Usando sessões Django (cookie-based). O frontend deve incluir `credentials: 'include'` nas requisições fetch.
+**Autenticação:** Usando **Token Authentication**. O frontend deve incluir o header `Authorization: Token <token>` em todas as requisições autenticadas.
 
 **Segurança:** Endpoints protegidos com `IsAuthenticated`. Filtros automáticos impedem alunos de verem vagas de outros cursos e professores de editarem vagas que não criaram.
+
+**Integração Frontend:** Ver documentação completa em `FRONTEND_INTEGRATION.md` para exemplos de código React/Axios.

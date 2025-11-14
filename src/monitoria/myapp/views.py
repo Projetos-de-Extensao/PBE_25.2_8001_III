@@ -5,11 +5,13 @@ from rest_framework import viewsets, status
 from rest_framework.decorators import action, api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.authtoken.models import Token
 from .models import Usuario, Aluno, Professor, Coordenador, VagaMonitoria, Candidatura
 from .serializers import (
     UsuarioSerializer, AlunoSerializer, ProfessorSerializer,
     CoordenadorSerializer, VagaMonitoriaSerializer, CandidaturaSerializer
 )
+from rest_framework.authtoken.models import Token
 
 
 def home(request):
@@ -39,7 +41,11 @@ def api_login(request):
     if not user:
         return Response({'erro': 'Credenciais inválidas'}, status=status.HTTP_401_UNAUTHORIZED)
 
+    # Inicia sessão (para quem optar por usar cookies)
     login(request, user)
+
+    # Gera/recupera token (para consumo por Authorization no frontend)
+    token, _ = Token.objects.get_or_create(user=user)
 
     # Verificar tipo de usuário
     tipo_usuario = None
@@ -58,6 +64,7 @@ def api_login(request):
     return Response({
         'sucesso': True,
         'tipo_usuario': tipo_usuario,
+        'token': token.key,
         'usuario': user_data
     })
 
@@ -129,10 +136,14 @@ def api_cadastro(request):
             departamento=departamento
         )
     
+    # Gerar token para o novo usuário
+    token = Token.objects.create(user=usuario)
+    
     return Response({
         'sucesso': True,
         'mensagem': 'Usuário cadastrado com sucesso',
         'tipo_usuario': tipo_usuario,
+        'token': token.key,
         'usuario': {'id': usuario.id, 'nome': usuario.nome, 'email': usuario.email}
     }, status=status.HTTP_201_CREATED)
 
@@ -172,6 +183,13 @@ def api_logout(request):
     """
     Endpoint de logout
     """
+    # Se a autenticação usada foi via token, podemos opcionalmente revogar o token do usuário
+    try:
+        # Remove todos os tokens do usuário (logout global) - ajuste conforme política desejada
+        Token.objects.filter(user=request.user).delete()
+    except Exception:
+        pass
+    # Encerra sessão caso exista
     logout(request)
     return Response({'sucesso': True, 'mensagem': 'Logout realizado com sucesso'})
 

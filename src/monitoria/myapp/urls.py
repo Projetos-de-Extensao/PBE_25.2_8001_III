@@ -1,6 +1,7 @@
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from . import views
+from rest_framework.authtoken.views import obtain_auth_token
 
 # Criar router e registrar viewsets
 router = DefaultRouter()
@@ -17,5 +18,7 @@ urlpatterns = [
     path('api/auth/cadastro/', views.api_cadastro, name='api-cadastro'),
     path('api/auth/logout/', views.api_logout, name='api-logout'),
     path('api/auth/me/', views.api_me, name='api-me'),
+    # Endpoint padrão do DRF para obter token via email/senha
+    path('api/auth/token/', obtain_auth_token, name='api-token'),
     path('api/', include(router.urls)),
 ]

@@ -75,16 +75,18 @@ Pré-requisitos: Python 3.10+, pip, virtualenv (recomendado), Node (apenas para 
 
 - Modelo de usuário: `myapp.Usuario` (herda de `AbstractUser`).
 - Perfis: `Aluno`, `Professor` e `Coordenador` via relações OneToOne com `Usuario`.
-- Autenticação: `SessionAuthentication` do DRF (cookies). No frontend, as requisições devem usar `credentials: 'include'`.
-- Login: retorna `tipo_usuario` para redirecionar o usuário no frontend (`/aluno`, `/professor` ou `/admin`).
+- Autenticação: **Token Authentication** (recomendado para frontend) + `SessionAuthentication` (para admin/navegação web).
+- Login: retorna `token` e `tipo_usuario` para uso no frontend.
+- Frontend deve enviar: `Authorization: Token <token>` no header de cada requisição.
 
 Principais rotas de autenticação (resumo):
-- `POST /api/auth/cadastro/` – cria `Usuario` + perfil (Aluno/Professor)
-- `POST /api/auth/login/` – autentica e inicia sessão; retorna tipo de usuário
-- `GET /api/auth/me/` – devolve informações do usuário autenticado
-- `POST /api/auth/logout/` – encerra a sessão
+- `POST /api/auth/cadastro/` – cria `Usuario` + perfil (Aluno/Professor) e retorna token
+- `POST /api/auth/login/` – autentica, inicia sessão e retorna token + tipo de usuário
+- `GET /api/auth/me/` – devolve informações do usuário autenticado (requer token)
+- `POST /api/auth/logout/` – encerra sessão e revoga token
+- `POST /api/auth/token/` – endpoint alternativo padrão do DRF para obter token
 
-Detalhes completos: ver `API_BACKEND.md`.
+Detalhes completos: ver `API_BACKEND.md` e `FRONTEND_INTEGRATION.md`.
 
 ## Vagas e Candidaturas (lógica de filtros e permissões)
 

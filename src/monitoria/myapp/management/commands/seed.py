@@ -12,42 +12,48 @@ class Command(BaseCommand):
     def handle(self, *args, **options):
         User = get_user_model()
 
-        # Usuários
-        aluno_user, _ = User.objects.get_or_create(
-            username='joao@ibmec.edu.br',
+        # Usuários - sempre redefine senha para garantir que está correta
+        aluno_user, created = User.objects.get_or_create(
+            username='aluno@ibmec.edu.br',
             defaults={
-                'email': 'joao@ibmec.edu.br',
-                'first_name': 'João',
-                'last_name': 'Silva',
+                'email': 'aluno@ibmec.edu.br',
+                'first_name': 'Aluno',
+                'last_name': 'Teste',
             }
         )
-        if not aluno_user.has_usable_password():
-            aluno_user.set_password('senha123')
-            aluno_user.save()
+        # Sempre atualiza a senha (mesmo que já exista)
+        aluno_user.set_password('senha123')
+        aluno_user.save()
 
-        prof_user, _ = User.objects.get_or_create(
-            username='ana.silva@ibmec.edu.br',
+        # Admin/Professor
+        prof_user, created = User.objects.get_or_create(
+            username='admin@ibmec.edu.br',
             defaults={
-                'email': 'ana.silva@ibmec.edu.br',
-                'first_name': 'Ana',
-                'last_name': 'Silva',
+                'email': 'admin@ibmec.edu.br',
+                'first_name': 'Admin',
+                'last_name': 'Professor',
+                'is_staff': True,
+                'is_superuser': True,
             }
         )
-        if not prof_user.has_usable_password():
-            prof_user.set_password('senha123')
-            prof_user.save()
+        # Sempre atualiza a senha
+        prof_user.set_password('admin123')
+        prof_user.is_staff = True
+        prof_user.is_superuser = True
+        prof_user.save()
 
-        coord_user, _ = User.objects.get_or_create(
+        # Coordenador (mantém para completude)
+        coord_user, created = User.objects.get_or_create(
             username='coord@ibmec.edu.br',
             defaults={
                 'email': 'coord@ibmec.edu.br',
-                'first_name': 'Carlos',
-                'last_name': 'Coelho',
+                'first_name': 'Coordenador',
+                'last_name': 'Teste',
             }
         )
-        if not coord_user.has_usable_password():
-            coord_user.set_password('senha123')
-            coord_user.save()
+        # Sempre atualiza a senha
+        coord_user.set_password('senha123')
+        coord_user.save()
 
         # Coordenador
         coord, _ = Coordenador.objects.get_or_create(usuario=coord_user, defaults={
@@ -91,14 +97,18 @@ class Command(BaseCommand):
             disciplina.periodo = '2025.1'
         disciplina.save()
 
-        # Aluno
-        aluno, _ = Aluno.objects.get_or_create(
-            usuario=aluno_user,
+        # Aluno - buscar por matrícula e atualizar usuário se necessário
+        aluno, created = Aluno.objects.get_or_create(
+            matricula='2025001',
             defaults={
-                'matricula': '2025001',
+                'usuario': aluno_user,
                 'curso': curso.nome,
             }
         )
+        if not created:
+            aluno.usuario = aluno_user
+            aluno.curso = curso.nome
+            aluno.save()
 
         # Histórico do Aluno
         HistoricoAlunoDisciplina.objects.get_or_create(

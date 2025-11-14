@@ -17,7 +17,7 @@ Este guia explica a arquitetura, as pastas, como rodar localmente, dados de test
 src/monitoria/
 ├── manage.py                 # Entrypoint do Django
 ├── db.sqlite3                # Banco de desenvolvimento
-├── test_endpoints.py         # Script de validação rápida do backend
+  ├── (scripts de teste removidos)      
 ├── frontend/                 # (Opcional) App React; build pode ser servido pelo Django
 ├── staticfiles/              # Pasta de arquivos estáticos coletados (collectstatic)
 ├── myproject/                # Configurações do projeto Django
@@ -69,7 +69,7 @@ Pré-requisitos: Python 3.10+, pip, virtualenv (recomendado), Node (apenas para 
 
 5) Validar rápido a API (opcional):
 - `cd src/monitoria`
-- `python test_endpoints.py` (roda cenários de validação de modelos, filtros e relacionamentos)
+  (Scripts de teste internos removidos conforme limpeza solicitada)
 
 ## Autenticação e Sessão
 

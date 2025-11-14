@@ -92,6 +92,44 @@ python manage.py runserver
 
 Abra seu navegador em: **http://127.0.0.1:8000/**
 
+## 🧹 Resetar Dados (Ambiente Limpo)
+
+Para limpar completamente os dados de teste e deixar o sistema vazio (ex: antes de usar em outro contexto), foi criado o comando de gerenciamento `reset_data`.
+
+### Uso Básico
+```bash
+python manage.py reset_data --yes
+```
+Isso remove todos os registros (usuários, perfis, vagas, candidaturas, cursos, disciplinas, tokens).
+
+### Criar um Superuser Após Reset
+```bash
+python manage.py reset_data --yes --create-superuser admin@ibmec.edu.br --password admin123
+```
+Cria um superuser limpo para acessar o admin.
+
+### Manter Superusers Existentes
+```bash
+python manage.py reset_data --yes --keep-superuser
+```
+Remove todos os dados exceto usuários marcados como superuser.
+
+### Reset Profundo (flush)
+```bash
+python manage.py reset_data --yes --flush
+```
+Executa `flush` do Django (remove também sessões e dados genéricos de outras apps).
+
+### Segurança
+- Sem `--yes` o comando pede confirmação digitando `CONFIRMAR`.
+- Recomenda-se fazer backup do banco se quiser preservar algo antes.
+
+### Repopular Após Reset
+```bash
+python manage.py seed
+```
+Restaura dados de demonstração (vagas, usuários de teste, etc.).
+
 ## 🔧 Desenvolvimento
 
 ### Modo de desenvolvimento do frontend (com hot-reload)
